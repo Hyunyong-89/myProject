@@ -1,0 +1,55 @@
+body {
+    margin: 100; // body의 기본 마진값을 0으로 초기화
+    display: flex; // body를 flexible하게
+    flex-direction: column; // 수직 방향으로 변경
+    height: 100vh; // viewport의 height에 맞게
+    font-family: 'Poor Story', cursive; // 폰트 설정
+    font-weight: 400;
+}
+
+/* .title {
+    background-color: #FFFFE0; // 배경색 설정
+    color: #98FB98; // Text 색상 설정
+    font-weight: bold; // 폰트를 굵게
+    font-size: 32px; // 폰트 사이트 설정
+    text-align: center; // Text를 중앙정렬
+    margin: 15px 15px; // 상하좌우 마진 15픽셀씩
+    padding: 30px; // 내부 padding은 30픽셀씩
+    border-radius: 15px 15px; // 모서리를 15px만큼 둥글게
+    border: 1px solid #F5DEB3; // 모서리를 1px 너비만큼 해당 색상으로
+}
+
+.main {
+    display: flex; // main 영역을 flexible하게
+    flex-grow: 1; // main이 차지하는 비중은 1
+    justify-content: center; // 주 축의 정렬기준을 가운데로
+    align-items: center; // 교차 축의 정렬기준을 가운데로
+    flex-direction: column; //  수직 방향으로 변경
+}
+
+.main button {
+    width: 150px; // 가로 크기 설정
+    height: 42px; // 세로 크기 설정
+    background-color: #6495ED; // 배경색 설정
+    border: 1px solid #87CEEB; // 모서리를 1px 너비로 색상설정까지
+    color: wheat; // Text 색상 설정
+    border-radius: 10px; // 모서리를 10px만큼 둥글게
+    margin-top: 30px; // 위 요소에서 30px만큼 위쪽으로 마진 줄 것
+}
+
+#letter {
+    display: none; // 생성 버튼을 누르기 전까지 뷰 숨기기
+    text-align: center; // 텍스트 가운데 정렬
+    font-size: 28px; // 폰트 사이즈 설정
+    line-height: 125%; // 줄간 설정
+}
+
+.footer {
+    background-color: #E6E6FA;
+    padding: 20px;
+    margin: 10px;
+    border: 1px solid #C8A2C8;
+    border-radius: 10px;
+    color: #9966CC;
+    text-align: center;
+} */
