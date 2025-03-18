@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.nrs.mapper.TaxBillMapper">
+
+	<!-- 세금계산서 목록 -->
+    <select id="selectTaxBillList" resultType="com.example.nrs.dto.TaxBillDto">
+		<![CDATA[
+			SELECT 
+					taxBillNo,
+					prjCd,
+					taxBillDate,
+				    billType,
+				    writeDate,
+				    supNo,
+				    supKindNo,
+				    supComName,
+				    supName,
+				    supAddr,
+				    supBusin,
+				    supKind,
+				    supEMail,
+				    supiedNo,
+				    supiedKindNo,
+				    supiedComName,
+				    supiedName,
+				    supiedAddr,
+				    supiedBusin,
+				    supiedKind,
+				    supiedEMail1,
+				    supiedEMail2,
+				    supVal,
+				    taxAm,
+				    note,
+				    day1,
+				    item1,
+				    standard1,
+				    vol1,
+				    cost1,
+				    supVal1,
+				    taxAm1,
+				    itemNote1,
+				    cash,
+				    cheque,
+				    draft,
+				    unpaidCrd,
+				    receiClam,
+				    stCd,
+				    sysDate
+			FROM 
+					tb_taxbill;
+		]]>
+	</select>
+    
+	<insert id="insertTaxBill" parameterType="com.example.nrs.dto.TaxBillDto">
+		<![CDATA[
+			INSERT INTO tb_taxBill
+			(
+				prjCd,
+				taxBillDate,
+				billType,
+				writeDate,
+				supNo,
+				supKindNo,
+				supComName,
+				supName,
+				supAddr,
+				supBusin,
+				supKind,
+				supEMail,
+				supiedNo,
+				supiedKindNo,
+				supiedComName,
+				supiedName,
+				supiedAddr,
+				supiedBusin,
+				supiedKind,
+				supiedEMail1,
+				supiedEMail2,
+				supVal,
+				taxAm,
+				note,
+				day1,
+				item1,
+				standard1,
+				vol1,
+				cost1,
+				supVal1,
+				taxAm1,
+				itemNote1,
+				cash,
+				cheque,
+				draft,
+				unpaidCrd,
+				receiClam,
+				stCd,
+				sysDate
+			) 
+			VALUES 
+			(
+				#{prjCd},
+				#{taxBillDate},
+				#{billType},
+				#{writeDate},
+				#{supNo},
+				#{supKindNo},
+				#{supComName},
+				#{supName},
+				#{supAddr},
+				#{supBusin},
+				#{supKind},
+				#{supEMail},
+				#{supiedNo},
+				#{supiedKindNo},
+				#{supiedComName},
+				#{supiedName},
+				#{supiedAddr},
+				#{supiedBusin},
+				#{supiedKind},
+				#{supiedEMail1},
+				#{supiedEMail2},
+				#{supVal},
+				#{taxAm},
+				#{note},
+				#{day1},
+				#{item1},
+				#{standard1},
+				#{vol1},
+				#{cost1},
+				#{supVal1},
+				#{taxAm1},
+				#{itemNote1},
+				#{cash},
+				#{cheque},
+				#{draft},
+				#{unpaidCrd},
+				#{receiClam},
+				#{stCd},
+				NOW()
+			)
+		]]>
+	</insert>
+	
+	<!-- 세금계산서 프로젝트별 목록 -->
+    <select id="selectTaxBillListByPrjCdTaxBillDate" parameterType="hashMap" resultType="com.example.nrs.dto.TaxBillDto">
+		<![CDATA[
+			SELECT 
+					taxBillNo,
+					taxBillDate,
+					prjCd,
+				    billType,
+				    writeDate,
+				    supNo,
+				    supKindNo,
+				    supComName,
+				    supName,
+				    supAddr,
+				    supBusin,
+				    supKind,
+				    supEMail,
+				    supiedNo,
+				    supiedKindNo,
+				    supiedComName,
+				    supiedName,
+				    supiedAddr,
+				    supiedBusin,
+				    supiedKind,
+				    supiedEMail1,
+				    supiedEMail2,
+				    supVal,
+				    taxAm,
+				    note,
+				    day1,
+				    item1,
+				    standard1,
+				    vol1,
+				    cost1,
+				    supVal1,
+				    taxAm1,
+				    itemNote1,
+				    cash,
+				    cheque,
+				    draft,
+				    unpaidCrd,
+				    receiClam,
+				    stCd,
+				    sysDate
+			FROM 
+					tb_taxbill
+			WHERE 1=1
+			  AND prjCd = #{prjCd}
+			  AND taxBillDate = #{taxBillDate}
+		]]>
+	</select>
+	
+	<!-- 세금계산서 프로젝트별, 날짜별 목록 -->
+    <select id="selectTaxBillLGroupDate" parameterType="string" resultType="string">
+		<![CDATA[
+			SELECT taxBillDate 
+			  FROM demo.tb_taxbill
+			WHERE 1=1
+			  AND prjCd = #{prjCd}
+			GROUP BY taxBillDate 
+			ORDER BY taxBillDate ASC;
+		]]>
+	</select>
+
+    
+</mapper>

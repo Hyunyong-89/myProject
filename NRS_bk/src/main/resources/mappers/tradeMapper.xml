@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.nrs.mapper.TradeMapper">
+
+	<!-- 프로젝트 목록 -->
+    <select id="selectTradeList" resultType="com.example.nrs.dto.TradeDto">
+		<![CDATA[
+			SELECT
+				  tradeNo
+		        , prjCd
+		        , prjName
+		        , purCom
+		        , customerNo
+		        , name
+		        , stYear
+		        , stMonth
+		        , stDay
+		        , endYear
+		        , endMonth
+		        , endDay
+		        , am
+		        , bank
+		        , accNo
+		        , valChk
+		        , ex		        		        		        		        
+			FROM
+				demo.tb_trade
+			ORDER BY prjCd, customerNo DESC, stYear,stMonth ASC
+		]]>
+	</select>
+    
+	<insert id="insertTrade" parameterType="com.example.nrs.dto.TradeDto">
+		<![CDATA[
+			INSERT INTO tb_trade
+			(
+				  prjCd
+				, prjName
+		        , purCom
+		        , customerNo
+		        , name
+		        , stYear
+		        , stMonth
+		        , stDay
+		       	, endYear
+		        , endMonth
+		        , endDay
+				, am
+				, bank
+				, accNo
+				, stCd
+		        , sysDate
+			) 
+			VALUES 
+			(
+				#{prjCd},
+				#{prjName},
+				#{purCom},
+				#{customerNo},
+				#{name},
+		        #{stYear},
+		        #{stMonth},
+		        #{stDay},
+		       	#{endYear},
+		        #{endMonth},
+		        #{endDay},
+				#{am},
+				#{bank},
+				#{accNo},
+				#{stCd},
+				NOW()
+			)
+		]]>
+	</insert>
+	
+	<!-- 매입매출 목록 -->
+    <select id="selectTradeListByPrjCd" resultType="com.example.nrs.dto.TradeDto">
+		<![CDATA[
+			SELECT
+				  tradeNo
+				, prjName
+		        , prjCd
+		        , purCom
+		        , customerNo
+		        , name
+		        , stYear
+		        , stMonth
+		        , stDay
+		        , endYear
+		        , endMonth
+		        , endDay
+		        , am
+		        , bank
+		        , accNo
+		        , valChk
+		        , ex		        		        		        		        
+			FROM
+				demo.tb_trade
+			WHERE stCd = '0'	
+		]]>
+			<if test='prjCd != "0"'>
+			<![CDATA[
+			  AND prjCd = #{prjCd}
+			]]>
+			</if>
+		<![CDATA[
+			ORDER BY prjCd, customerNo DESC, stYear,stMonth ASC
+		]]>
+	</select>
+    
+    <select id="selectProjectTradeNo" parameterType="String" resultType="com.example.nrs.dto.TradeDto">
+		<![CDATA[
+			SELECT 
+			  	  customerNo
+		        , name
+			FROM
+				demo.tb_trade
+			WHERE
+			    prjCd = #{prjCd}
+			AND stCd = '0'   
+			GROUP BY customerNo, name
+		]]>
+	</select>
+	
+	<!-- 프로젝트 목록 -->
+    <select id="selectTradeListByPrjCdAndCust" parameterType="HashMap" resultType="com.example.nrs.dto.TradeDto">
+		<![CDATA[
+			SELECT
+				  tradeNo
+				, prjName
+		        , prjCd
+		        , purCom
+		        , customerNo
+		        , name
+		        , stYear
+		        , stMonth
+		        , stDay
+		        , endYear
+		        , endMonth
+		        , endDay
+		        , am
+		        , bank
+		        , accNo
+		        , valChk
+		        , ex		        		        		        		        
+			FROM
+				demo.tb_trade
+			WHERE stCd = '0'
+		]]>
+			<if test='prjCd != "0"'>
+			<![CDATA[
+				AND prjCd = #{prjCd}
+			]]>
+			</if>
+			<if test='customerNo != "0"'>
+			<![CDATA[
+			  	AND customerNo = #{customerNo}
+			]]>
+			</if>
+		<![CDATA[
+			ORDER BY prjCd, customerNo DESC, stYear,stMonth ASC
+		]]>
+	</select>
+    
+    <update id="updateTrade" parameterType="com.example.nrs.dto.TradeDto">
+		<![CDATA[
+			UPDATE tb_trade
+			SET	  prjCd 	 = #{prjCd}
+			    , prjName    = #{prjName}
+		        , purCom 	 = #{purCom}
+		        , customerNo = #{customerNo}
+		        , name 		 = #{name}
+		        , stYear 	 = #{stYear}
+		        , stMonth 	 = #{stMonth}
+		        , stDay 	 = #{stDay}
+		       	, endYear 	 = #{endYear}
+		        , endMonth 	 = #{endMonth}
+		        , endDay 	 = #{endDay}
+				, am 		 = #{am}
+				, bank 		 = #{bank}
+				, accNo 	 = #{accNo}
+			WHERE
+			      tradeNo = #{tradeNo}
+		]]>
+	</update>
+	
+	<update id="deleteTrade" parameterType="com.example.nrs.dto.TradeDto">
+		<![CDATA[
+			UPDATE tb_trade
+			SET	   stCd = '1'
+			WHERE
+			       tradeNo = #{tradeNo}
+		]]>
+	</update>
+	
+	
+	<!-- 매입매출년월별 -->
+    <select id="selectTradeListByMassTransfer" parameterType="HashMap" resultType="com.example.nrs.dto.TradeDto">
+		<![CDATA[
+			SELECT
+				  tradeNo
+				, prjName
+		        , prjCd
+		        , purCom
+		        , customerNo
+		        , name
+		        , stYear
+		        , stMonth
+		        , stDay
+		        , endYear
+		        , endMonth
+		        , endDay
+		        , am
+		        , bank
+		        , accNo
+		        , valChk
+		        , ex		        		        		        		        
+			FROM
+				demo.tb_trade
+			WHERE stCd = '0'
+		]]>
+			<if test='stYear != null'>
+			<![CDATA[
+				AND stYear = #{stYear}
+			]]>
+			</if>
+			<if test='stMonth != null'>
+			<![CDATA[
+			  	AND stMonth = #{stMonth}
+			]]>
+			</if>
+			<if test='customerNo != null'>
+			<![CDATA[
+			  	AND customerNo = #{customerNo}
+			]]>
+			</if>
+		<![CDATA[
+			ORDER BY prjCd, customerNo DESC, stYear,stMonth ASC
+		]]>
+	</select>
+    
+</mapper>

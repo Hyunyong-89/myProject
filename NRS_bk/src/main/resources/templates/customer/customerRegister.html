@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+	<head>
+		<meta charset="UTF-8">
+		<title>고객 리스트</title>
+	</head>
+	<th:block layout:fragment="content">
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$("input[name=section]").click(function(){
+					var section = $(this).val();
+					//법인
+					if(section == 1){
+						//회사명
+						$("#comNameId").text("법인명(단체명)");
+						$("#comName").attr("disabled", false);
+						//이름
+						$("#nameId").text("대표자");
+						//번호
+						$("#pnoId").text("법인등록번호");
+						
+					} //개인사업자
+					else if(section == 2){
+						//회사명
+						$("#comNameId").text("상호명");
+						$("#comName").attr("disabled", false);
+						//이름
+						$("#nameId").text("이름");
+						//번호
+						$("#pnoId").text("사업자번호");
+						
+					} //원천징수
+					else if(section == 3){
+						//회사명
+						$("#comNameId").text("회사명");
+						$("#comName").val("").attr("disabled",true);
+						//이름
+						$("#nameId").text("이름");
+						//번호
+						$("#pnoId").text("주민번호");
+					}
+				});
+				$("#submit").click(function(){
+					var frm = $("#frm").serializeArray();
+					
+					$.ajax({
+						url : '/customer/insertCustomer.do',           // 요청할 서버url    
+						type: 'POST',
+						dataType : 'json',       // 데이터 타입 (html, xml, json, text 등등)
+						contentType: "application/json",
+						data : JSON.stringify(objectifyForm(frm)),
+						success : function(result) { // 결과 성공 콜백함수        
+							console.log(result);
+							location.href = result.returnUrl;
+						
+						},    
+						error : function(request, status, error) { // 결과 에러 콜백함수        
+							console.log(error)    }
+					})	
+				});
+			});
+			
+		</script>
+	<div class="container">
+	    <h2>고객 등록</h2>
+	    <form id="frm" name="frm">
+	    	<table class="customer_detail">
+	    		<tr>
+	    			<td class="title">구분<span class="red">*</span></td>
+	    			<td>
+	    				<input type="radio" id="section1" name="section" value="1" checked/>
+	    				<label for="section">법인</label>
+	    				<input type="radio" id="section2" name="section" value="2"/>
+	    				<label for="section">개인</label>
+	    				<input type="radio" id="section3" name="section" value="3"/>
+	    				<label for="section">원천징수</label>
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td><label id="comNameId">회사명</label></td>
+	    			<td><input type="text" id="comName" name="comName"/></td>
+	    		</tr>
+	    		<tr>
+	    			<td><label id="nameId">대표이름</label><span class="red">*</span></td>
+	    			<td><input type="text" id="name" name="name"/></td>
+	    		</tr>
+	    		<tr>
+	    			<td><label id="pnoId">법인번호</label><span class="red">*</span></td>
+	    			<td><input type="text" id="pno" name="pno"/></td>
+	    		</tr>
+	    		<tr>
+	    			<td>핸드폰번호<span class="red">*</span></td>
+	    			<td>
+	    			<!-- <input class="phone" type="text" id="phone" name="phone"/> -->
+	    				<select class="phone" id="phone1" name="phone1">
+	    					<option value="010">010</option>
+	    				</select>&nbsp;-&nbsp;<input class="phone" type="text" id="phone2" name="phone2" maxlength="4"/>&nbsp;-&nbsp;<input class="phone" type="text" id="phone3" name="phone3" maxlength="4"/>
+    				 </td>
+	    		</tr>
+	    		<tr>
+	    			<td>이메일</td>
+	    			<td>
+	    				<input type="text" id="email" name="email"/>
+	    			</td>
+	    		</tr>
+	    		<tr>
+	    			<td>우편번호</td>
+	    			<td><input type="text" id="postNo" name="postNo" maxlength="5"/></td>
+	    		</tr>
+	    		<tr>
+	    			<td>주소</td>
+	    			<td><input type="text" id="address" name="address"/></td>
+	    		</tr>
+	    		<tr>
+	    			<td>은행</td>
+	    			<td><input type="text" id="bank" name="bank"/></td>
+	    		</tr>
+	    		<tr>
+	    			<td>계좌번호</td>
+	    			<td><input type="text" id="accNo" name="accNo"/></td>
+	    		</tr>
+	    		<tr>
+	    			<td>세금계산서 이메일</td>
+	    			<td><input type="text" id="calcEMail" name="calcEMail"/></td>
+	    		</tr>
+	    	</table>
+	    	<input type="button" id="submit" value="저장" class="btn">
+	    	<a class="btn" href="/customer/openCustomerList.do">목록</a>
+	    </form>
+    </div>
+</html>
