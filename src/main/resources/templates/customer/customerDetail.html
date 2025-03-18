@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/default_layout">
+<head>
+	<meta charset="UTF-8">
+	<title>고객 수정</title>
+	<link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<th:block layout:fragment="content">
+	<div class="container">
+		<h2>고객 수정</h2>
+	    <form id="frm" method="post">
+	    	<table class="customer_detail">
+				<colgroup>
+					<col width="12%"/>
+					<col width="28%"/>
+					<col width="10%"/>
+					<col width="30%"/>
+					<col width="10%"/>
+					<col width="30%"/>
+				</colgroup>
+				<caption>고객 상세</caption>
+				<tbody>
+					<tr>
+						<th scope="row">고객번호</th>
+						<td th:text="${customerNo }"></td>
+						<th scope="row">구분</th>
+						<td th:text="${section}"></td>
+					</tr>
+					<tr>
+						<th scope="row">회사명</th>
+						<td><input type="text" id="comName" name="comName" th:value="${comName }"/></td>
+						<th scope="row">이름</th>
+						<td><input type="text" id="name" name="name" th:value="${name }"/></td>
+						<th scope="row">구분번호</th>
+						<td><input type="text" id="pno" name="pno" th:value="${pno }"/></td>
+					</tr>
+					<tr>
+						<th scope="row">핸드폰번호</th>
+						<td><input type="text" id="phone" name="phone" th:value="${phone }"/></td>
+						<th scope="row">이메일</th>
+						<td colspan="2"><input type="text" id="email" name="email" th:value="${email }"/></td>
+					</tr>
+					<tr>
+						<th scope="row">우편번호</th>
+						<td><input type="text" id="postNo" name="postNo" th:value="${postNo }"/></td>
+						<th scope="row">주소</th>
+						<td><input type="text" id="address" name="address" th:value="${address }"/></td>
+					</tr>
+					<tr>
+						<th scope="row">은행</th>
+						<td><input type="text" id="bank" name="bank" th:value="${bank }"/></td>
+						<th scope="row">계좌번호</th>
+						<td><input type="text" id="accNo" name="accNo" th:value="${accNo }"/></td>
+					</tr>
+					<tr>
+						<th scope="row">계산이메일</th>
+						<td>
+							<input type="text" id="calcEMail" name="calcEMail" th:value="${calcEMail }"/>
+							<input type="hidden" id="customerNo"  name="customerNo" th:value="${customerNo }" />
+							<input type="hidden" id="section"  name="section" th:value=${section} />
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 폼을 이용해서 데이터를 전송할 때 input이나 textarea의 내용만 전달된다. -->
+			<!-- 기존 화면에서 글을 수정하거나 삭제할 때 꼭 필요한 글번호(customerIdx)를 input에 저장시켜 hidden으로 숨긴 채 데이터가 전송할 때 같이 보내준다. -->
+		</form>
+		
+		<a href="#this" id="list" class="btn">목록으로</a>
+		<a href="#this" id="edit" class="btn">수정하기</a>
+		<a href="#this" id="delete" class="btn">삭제하기</a>
+	</div>
+	
+	<!-- jQuery를 사용하기 위해 라이브러리 추가 -->
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#list").on("click", function(){
+				location.href = "/customer/openCustomerList.do";
+			});
+			
+			$("#edit").on("click", function(){
+				var frm = $("#frm")[0];
+				frm.action = "/customer/updateCustomer.do";
+				frm.submit();
+			});
+			
+			$("#delete").on("click", function(){
+				var frm = $("#frm")[0];
+				frm.action = "/customer/deleteCustomer.do";
+				frm.submit();
+			});
+		});
+	</script>
+</th:block>
+</html>
